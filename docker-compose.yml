@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DATABASE=${DATABASE_DATABASE}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+    container_name: "${APP_NAME}_db"
+    volumes:
+      - '${STORAGE_PGDATA}:/var/lib/postgresql/data'
+      - ./docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    ports:
+      - '${DATABASE_PORT}:5432'
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    container_name: "${APP_NAME}_app"
+    volumes:
+      - ./:/var/www
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_PORT: ${APP_PORT}
+      APP_SECRET: '${APP_SECRET}'
+      DATABASE_URL: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:${DATABASE_PORT}/${DATABASE_DATABASE}'
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www
+    depends_on:
+      - app
