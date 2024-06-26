@@ -8,4 +8,5 @@
 /var/
 /vendor/
 .idea
-###< symfony/framework-bundle ###
+.phpunit.result.cache
+/.phpcs-cache

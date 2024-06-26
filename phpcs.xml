@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="Symfony Coding Standards">
+    <description>Symfony Assessment Project Coding Standards</description>
+    <rule ref="PSR12">
+        <exclude name="Generic.Files.LineLength.TooLong"/>
+        <exclude name="Generic.Commenting.RepeatedComment"/>
+    </rule>
+    <files>
+        <include pattern="src/" />
+        <include pattern="tests/" />
+    </files>
+</ruleset>
