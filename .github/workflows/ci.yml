@@ -19,6 +19,9 @@ jobs:
         with:
           php-version: '8.2'
 
+      - name: Set environment
+        run: cp .env.test .env
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
