@@ -11,6 +11,11 @@ class UserFixtures extends Fixture
 {
     private UserPasswordHasherInterface $passwordHasher;
 
+    public const CREDENTIALS = [
+        'username' => 'admin',
+        'password' => 'admin_password',
+    ];
+
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->passwordHasher = $passwordHasher;
@@ -19,12 +24,12 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $user->setUsername('admin');
+        $user->setUsername(self::CREDENTIALS['username']);
         $user->setRoles(['ROLE_ADMIN']);
 
         $hashedPassword = $this->passwordHasher->hashPassword(
             $user,
-            'admin_password'
+            self::CREDENTIALS['password']
         );
         $user->setPassword($hashedPassword);
 

@@ -95,6 +95,6 @@ class ProductController extends AbstractController
 
         $this->productService->delete($product);
 
-        return $this->json(ResponseUtil::success());
+        return $this->json(ResponseUtil::success(), Response::HTTP_NO_CONTENT);
     }
 }

@@ -15,4 +15,17 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+
+    public function findLastUuid(): ?string
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+        $result = $query->getOneOrNullResult();
+
+        return $result ? $result['id'] : null;
+    }
 }
