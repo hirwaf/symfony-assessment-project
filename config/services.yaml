@@ -6,6 +6,13 @@
 parameters:
 
 services:
+    App\Listener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 50 }
+
+    Symfony\Component\Serializer\SerializerInterface:
+        alias: 'serializer'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
