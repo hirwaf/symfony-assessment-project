@@ -7,10 +7,10 @@ This project is a RESTful API built with Symfony, featuring product management e
 
 1. [Setup](#setup)
 2. [Architecture Overview](#architecture-overview)
-3. [API Documentation](#api-documentation)
-4. [Development](#development)
-5. [Testing](#testing)
-7. [Database Seeding](#database-seeding)
+3. [Development](#development)
+4. [Migrations](#migrate)
+5. [Generate JWT keys](...)
+6. [Database Seeding](#database-seeding)
 
 ## Setup
 
@@ -32,22 +32,17 @@ cp .env.test .env
    ```
 3. Build and start the Docker containers:
    ```
-docker-compose build
-docker-compose up -d
+docker-compose up --build
    ```
-4. Install dependencies:
-   ```
-docker-compose exec app composer install
-   ```
-5. Run database migrations:
+4. Run database migrations ( Development ):
    ```
 docker-compose exec app php bin/console doctrine:migrations:migrate
    ```
-6. Generate JWT keys:
+5. Generate JWT keys:
    ```
 docker-compose exec app php bin/console lexik:jwt:generate-keypair
    ```
-7. Seed the database with an initial admin user:
+6. Seed the database with an initial admin user:
    ```
 docker-compose exec app php bin/console doctrine:fixtures:load
    ```
